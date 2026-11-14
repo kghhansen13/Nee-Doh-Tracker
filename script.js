@@ -136,7 +136,7 @@ function renderForm() {
   const it = editingId ? items.find(i => i.id === editingId) : null;
   if (editingId && !it) { location.hash = ""; return; }
   const v = it || { name: "", brand: "", variant: "", date: "", notes: "", color: "" };
-  const brands = [...new Set(["Nee Doh", ...items.map(i => i.brand).filter(Boolean))];
+  const brands = [...new Set(["Nee Doh", ...items.map(i => i.brand).filter(Boolean)])];
   const nameInput = h("input", { name: "name", required: true, maxlength: "60", value: v.name, autocomplete: "off" });
 
   let chosen = /^#[0-9a-f]{6}$/i.test(v.color || "") ? v.color : "";
