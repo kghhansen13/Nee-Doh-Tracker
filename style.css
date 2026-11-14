@@ -1,0 +1,59 @@
+:root{
+  --bg:#f4efff;--surface:#ffffff;--ink:#2a1a4a;--muted:#6a5c8c;--line:#ddd0fa;
+  --accent:#d6246e;--accent-ink:#ffffff;--soft:#ffe3f0;--focus:#5b2bd6;
+  --shadow:0 7px 0 rgba(42,26,74,.13);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b1132;--surface:#2a1e4a;--ink:#f6efff;--muted:#bcaee3;--line:#46376f;
+    --accent:#ff7ab8;--accent-ink:#2a1a4a;--soft:#43264f;--focus:#ffd23f;--shadow:0 7px 0 rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b1132;--surface:#2a1e4a;--ink:#f6efff;--muted:#bcaee3;--line:#46376f;
+  --accent:#ff7ab8;--accent-ink:#2a1a4a;--soft:#43264f;--focus:#ffd23f;--shadow:0 7px 0 rgba(0,0,0,.35);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;font-size:1.05rem;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding:22px 18px 48px}
+h1,h2,h3{font-family:"Baloo 2","Nunito",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(2.3rem,7vw,3.6rem);font-weight:800}
+h2{font-size:2rem;font-weight:800;margin-bottom:1rem}
+h3{font-size:1.4rem;font-weight:800}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1rem;margin-bottom:1.3rem}
+.top h1{flex:1 1 auto}
+.pill{background:var(--soft);border-radius:999px;padding:.3rem .95rem;font-weight:700}
+.btn{font:inherit;font-weight:700;display:inline-block;text-decoration:none;cursor:pointer;border:3px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:.6rem 1.3rem;box-shadow:0 5px 0 rgba(42,26,74,.18);transition:transform .22s cubic-bezier(.3,1.9,.5,1)}
+.btn:active{transform:scale(1.07,.88)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line);box-shadow:none}
+.btn.small{padding:.3rem .9rem;font-size:.95rem}
+.btn.danger{color:var(--accent)}
+.toolbar{display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:1rem}
+.toolbar .search{flex:2 1 220px}
+.toolbar select{flex:1 1 150px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:3px solid var(--line);border-radius:18px;padding:.65rem .95rem;width:100%}
+textarea{min-height:110px;resize:vertical}
+.count{margin:0 0 1rem;color:var(--muted);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:1.3rem}
+.card{background:var(--surface);border-radius:28px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s cubic-bezier(.3,1.9,.5,1)}
+.card:active{transform:scale(1.04,.93)}
+.band{background:var(--soft);padding:1.1rem 0 .9rem;display:flex;justify-content:center}
+.blob{width:84px;height:76px;border-radius:52% 48% 46% 54% / 60% 44% 56% 40%;display:grid;place-items:center;font:800 2.2rem "Baloo 2","Nunito",sans-serif;color:#2a1a4a;border:3px solid rgba(42,26,74,.18)}
+.body{padding:.9rem 1.1rem .4rem;flex:1}
+.body p{margin:.35rem 0 0}
+.chip{display:inline-block;margin-top:.45rem;background:var(--soft);border-radius:999px;padding:.1rem .75rem;font-weight:700;font-size:.92rem}
+.variant{font-weight:700}
+.meta{color:var(--muted);font-size:.95rem}
+.notes{font-size:.98rem}
+.actions{display:flex;gap:.5rem;padding:.7rem 1.1rem 1.1rem}
+.empty{grid-column:1/-1;background:var(--surface);border:3px dashed var(--line);border-radius:28px;padding:2rem 1.4rem;text-align:center}
+.empty p{margin:.4rem 0 1.1rem;color:var(--muted)}
+.form{max-width:520px;display:grid;gap:1rem}
+.form label{display:grid;gap:.35rem;font-weight:700}
+.form .row{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.4rem}
+@media (prefers-reduced-motion:reduce){.btn,.card{transition:none}.btn:active,.card:active{transform:none}}
