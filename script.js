@@ -28,9 +28,9 @@ function h(tag, props = {}, ...kids) {
 const NAMED = {
   rainbow: "linear-gradient(135deg,#ff6fb1,#ffd23f,#3ecf8e,#3b82f6)",
   red: "#e5484d", pink: "#ff6fb1", orange: "#ff8a3d", yellow: "#ffd23f",
-  green: "#3ecf8e", mint: "#6ee7c8", blue: "#4a90f5", teal: "#14b8a6",
+  green: "#3ecf8e", mint: "#6ee7c8", blue: "#3385ff", teal: "#14b8a6",
   purple: "#9b6cf6", lavender: "#c3adff", white: "#f3f0ff", black: "#8a82a6",
-  clear: "#cfe9ff", glow: "#b6ff6b", gold: "#f5c542", silver: "#c0c6d4"
+  clear: "#cfe9ff", glow: "#cdff99", gold: "#ddbb55", silver: "#c0c6d4"
 };
 function swatch(v) {
   const s = (v || "").toLowerCase();
