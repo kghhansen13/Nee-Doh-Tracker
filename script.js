@@ -127,7 +127,7 @@ function renderHome() {
     sel("sort", "Sort by", [["new", "Newest acquired"], ["old", "Oldest acquired"], ["az", "Name A to Z"], ["za", "Name Z to A"]]));
 
   app.replaceChildren(
-    h("div", { class: "top" }, h("h1", {}, "Squishy Shelf"),
+    h("div", { class: "top" }, h("h1", {}, "Nee Doh Shelf"),
       h("span", { class: "pill" }, items.length + (items.length === 1 ? " squishy" : " squishies")), addBtn),
     items.length ? toolbar : null, count, grid);
   draw();
