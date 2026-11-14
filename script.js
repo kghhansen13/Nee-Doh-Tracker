@@ -40,6 +40,25 @@ function swatch(v) {
   for (const ch of s) n = (n * 31 + ch.charCodeAt(0)) % 360;
   return "hsl(" + n + " 75% 66%)";
 }
+function colorToHex(text) {
+  const t = text.trim().toLowerCase();
+  const named = NAMED[t];
+  if (named && named.startsWith("#")) return named;
+  const el = document.createElement("div");
+  el.style.color = t;
+  if (!el.style.color) return null;
+  document.body.append(el);
+  const m = getComputedStyle(el).color.match(/\d+/g);
+  el.remove();
+  return "#" + m.slice(0, 3).map(n => (+n).toString(16).padStart(2, "0")).join("");
+}
+
+function blobStyle(i) {
+  const bg = /^#[0-9a-f]{6}$/i.test(i.color || "") ? i.color : swatch(i.variant);
+  const n = bg.startsWith("#") ? parseInt(bg.slice(1), 16) : -1;
+  const light = n < 0 || (((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000) >= 140;
+  return "background:" + bg + ";color:" + (light ? "#2a1a4a" : "#ffffff");
+}
 const fmt = d => new Date(d + "T00:00").toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
 
 function view() {
@@ -58,7 +77,7 @@ function view() {
 
 function card(i) {
   return h("article", { class: "card" },
-    h("div", { class: "band" }, h("div", { class: "blob", style: "background:" + swatch(i.variant) }, (i.name[0] || "?").toUpperCase())),
+    h("div", { class: "blob", style: blobStyle(i) }, (i.name[0] || "?").toUpperCase()),
     h("div", { class: "body" },
       h("h3", {}, i.name),
       i.brand && h("span", { class: "chip" }, i.brand),
@@ -116,15 +135,40 @@ function renderHome() {
 function renderForm() {
   const it = editingId ? items.find(i => i.id === editingId) : null;
   if (editingId && !it) { location.hash = ""; return; }
-  const v = it || { name: "", brand: "", variant: "", date: "", notes: "" };
+  const v = it || { name: "", brand: "", variant: "", date: "", notes: "", color: "" };
   const brands = [...new Set(["Nee Doh", ...items.map(i => i.brand).filter(Boolean))];
   const nameInput = h("input", { name: "name", required: true, maxlength: "60", value: v.name, autocomplete: "off" });
+
+  let chosen = /^#[0-9a-f]{6}$/i.test(v.color || "") ? v.color : "";
+  const preview = h("span", { class: "color-preview", "aria-hidden": "true" });
+  const hint = h("span", { class: "hint", "aria-live": "polite" });
+  const picker = h("input", { type: "color", "aria-label": "Pick a color", value: chosen || "#ff6fb1" });
+  const colorText = h("input", { placeholder: "Type a color name or #hex", "aria-label": "Color name", value: chosen, autocomplete: "off" });
+  const showColor = () => { preview.style.background = chosen || "transparent"; };
+  colorText.addEventListener("input", () => {
+    const t = colorText.value.trim();
+    if (!t) { chosen = ""; hint.textContent = ""; }
+    else {
+      const hex = colorToHex(t);
+      if (hex) { chosen = hex; picker.value = hex; hint.textContent = hex; }
+      else { chosen = ""; hint.textContent = "Not a color I know. Try a name like teal, or use the picker."; }
+    }
+    showColor();
+  });
+  picker.addEventListener("input", () => {
+    chosen = picker.value;
+    colorText.value = picker.value;
+    hint.textContent = "";
+    showColor();
+  });
+  showColor();
+
   const form = h("form", {
     class: "form",
     onsubmit: e => {
       e.preventDefault();
       const d = Object.fromEntries(new FormData(e.target));
-      const rec = { name: d.name.trim(), brand: d.brand.trim(), variant: d.variant.trim(), date: d.date, notes: d.notes.trim() };
+      const rec = { name: d.name.trim(), brand: d.brand.trim(), variant: d.variant.trim(), color: chosen, date: d.date, notes: d.notes.trim() };
       if (!rec.name) return;
       if (it) Object.assign(it, rec); else items.push({ id: uid(), ...rec });
       save();
@@ -134,7 +178,11 @@ function renderForm() {
     h("label", {}, "Name", nameInput),
     h("label", {}, "Brand or line", h("input", { name: "brand", list: "brands", value: v.brand, placeholder: "Nee Doh, or another brand", autocomplete: "off" })),
     h("datalist", { id: "brands" }, brands.map(b => h("option", { value: b }))),
-    h("label", {}, "Color or variant", h("input", { name: "variant", value: v.variant, placeholder: "Glow blue, rainbow, clear…", autocomplete: "off" })),
+    h("label", {}, "Variant", h("input", { name: "variant", value: v.variant, placeholder: "Glow, clear, rainbow…", autocomplete: "off" })),
+    h("div", { class: "color-field" },
+      h("span", { class: "label" }, "Color"),
+      h("div", { class: "color-row" }, preview, colorText, picker),
+      hint),
     h("label", {}, "Date acquired", h("input", { type: "date", name: "date", value: v.date })),
     h("label", {}, "Squish and texture notes", h("textarea", { name: "notes", placeholder: "Slow rebound, extra gooey, a little sticky…" }, v.notes)),
     h("div", { class: "row" }, h("button", { class: "btn", type: "submit" }, "Save squishy"), h("a", { class: "btn ghost", href: "#" }, "Back to shelf")));
