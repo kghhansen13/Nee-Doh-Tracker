@@ -1,8 +1,6 @@
 # Nee-Doh-Tracker
 A small browser app, built with only HTML, CSS, and JavaScript, for keeping track of a Nee Doh and squishy collection.
 
-Goal: A small browser app, built with only HTML, CSS, and JavaScript, for keeping track of a Nee Doh and squishy collection.
-
 Who it's for: A single collector using it on their own device. No accounts, no sharing, no server.
 
 Must-have features: Add, edit, and delete squishies. Each item records name, brand or line (Nee Doh or other), color or variant, date acquired, and squish or texture notes. Adding and editing happen on a separate form screen, and deleting happens immediately with no confirmation. Card grid with search, filters, and sorting. The main screen shows the collection as a grid of cards. Search by name, filter by brand and color, and sort by name or date acquired. Automatic saving in the browser. The collection is stored in localStorage, so it is still there when the page is reopened.
