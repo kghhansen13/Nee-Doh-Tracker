@@ -129,7 +129,7 @@ function renderHome() {
   app.replaceChildren(
     h("div", { class: "top" }, h("h1", {}, "Nee Doh Shelf"),
       h("span", { class: "pill" }, items.length + (items.length === 1 ? " squishy" : " squishies")), addBtn),
-    items.length ? toolbar : null, count, grid);
+    items.length ? toolbar : "", count, grid);
   draw();
 }
 
