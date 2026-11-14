@@ -1,3 +1,4 @@
+document.getElementById("app").textContent = "script is running";
 const KEY = "squishy-shelf-v1";
 let items = load();
 let editingId = null;
