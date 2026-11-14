@@ -57,3 +57,10 @@ textarea{min-height:110px;resize:vertical}
 .form label{display:grid;gap:.35rem;font-weight:700}
 .form .row{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.4rem}
 @media (prefers-reduced-motion:reduce){.btn,.card{transition:none}.btn:active,.card:active{transform:none}}
+.color-field{display:grid;gap:.35rem}
+.color-field .label{font-weight:700}
+.color-row{display:flex;gap:.6rem;align-items:center}
+.color-row input:not([type="color"]){flex:1 1 auto;min-width:0}
+.color-row input[type="color"]{flex:none;width:3.4rem;height:3rem;padding:.2rem;cursor:pointer}
+.color-preview{flex:none;width:2.4rem;height:2.4rem;border-radius:50%;border:3px solid var(--line)}
+.hint{color:var(--muted);font-size:.95rem;min-height:1.4em}
